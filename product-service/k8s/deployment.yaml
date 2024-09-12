@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: product-service
-        image: product-service
+        image: neseilhan/product-service:v2
         ports:
         - containerPort: 8080
         env:

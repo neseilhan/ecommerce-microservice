@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: order-service
-          image: order-service
+          image: neseilhan/order-service:v2
           ports:
             - containerPort: 8082
           env:
