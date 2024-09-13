@@ -1,7 +1,9 @@
 package dev.example.order_service.service;
 
+import dev.example.order_service.config.RabbitMQConfig;
 import dev.example.order_service.model.Order;
 import dev.example.order_service.repository.OrderRepository;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +11,6 @@ import java.util.List;
 
 @Service
 public class OrderService {
-
     @Autowired
     private OrderRepository orderRepository;
 

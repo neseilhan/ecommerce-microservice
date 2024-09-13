@@ -4,9 +4,10 @@ metadata:
   name: order-service
 spec:
   type: NodePort
-  ports:
-    - port: 8082
-      targetPort: 8082
-      nodePort: 30012
   selector:
     app: order-service
+  ports:
+    - protocol: TCP
+      port: 8082
+      targetPort: 8082
+      nodePort: 30012

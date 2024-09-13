@@ -10,5 +10,23 @@ spring:
           uri: http://order-service:8082/
           predicates:
             - Path=/api/orders/**
+  application:
+    name: api-gateway
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
 server:
   port: 8081

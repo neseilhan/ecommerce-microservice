@@ -35,6 +35,39 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>io.prometheus</groupId>
+			<artifactId>simpleclient</artifactId>
+			<version>0.12.0</version>
+		</dependency>
+		<dependency>
+			<groupId>io.prometheus</groupId>
+			<artifactId>simpleclient_httpserver</artifactId>
+			<version>0.12.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.prometheus</groupId>
+			<artifactId>simpleclient</artifactId>
+			<version>0.12.0</version>
+		</dependency>
+		<dependency>
+			<groupId>io.prometheus</groupId>
+			<artifactId>simpleclient_httpserver</artifactId>
+			<version>0.12.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>
