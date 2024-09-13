@@ -1,0 +1,89 @@
+version: '3.8'
+
+services:
+  # RabbitMQ Servisi
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq  # Kalıcı veri saklama
+
+  # Prometheus Servisi
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - prometheus_config:/etc/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+
+  # Grafana Servisi
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"  # Grafana arayüz portu
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin  # Admin şifresi
+    depends_on:
+      - prometheus  # Grafana'nın başlaması için Prometheus'un başlamış olması gerekir
+
+  # PostgreSQL Servisi
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=ecommerce
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Uygulama Servisi
+  order-service:
+    image: your-docker-repo/order-service:latest
+    container_name: order-service
+    ports:
+      - "8082:8082"  # Order service portu
+    environment:
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=guest
+      - SPRING_RABBITMQ_PASSWORD=guest
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/ecommerce
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    depends_on:
+      - rabbitmq
+      - postgres
+
+  # Uygulama Servisi
+  product-service:
+    image: your-docker-repo/product-service:latest
+    container_name: product-service
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=guest
+      - SPRING_RABBITMQ_PASSWORD=guest
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/ecommerce
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    depends_on:
+      - rabbitmq
+      - postgres
+
+volumes:
+  rabbitmq_data:
+  prometheus_config:
+    external: true
+  postgres_data:
