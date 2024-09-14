@@ -9,7 +9,7 @@ services:
       - "5672:5672"
       - "15672:15672"
     volumes:
-      - rabbitmq_data:/var/lib/rabbitmq  # Kalıcı veri saklama
+      - rabbitmq_data:/var/lib/rabbitmq
 
   # Prometheus Servisi
   prometheus:
@@ -27,9 +27,9 @@ services:
     image: grafana/grafana:latest
     container_name: grafana
     ports:
-      - "3000:3000"  # Grafana arayüz portu
+      - "3000:3000"
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin  # Admin şifresi
+      - GF_SECURITY_ADMIN_PASSWORD=admin
     depends_on:
       - prometheus  # Grafana'nın başlaması için Prometheus'un başlamış olması gerekir
 
@@ -51,7 +51,7 @@ services:
     image: your-docker-repo/order-service:latest
     container_name: order-service
     ports:
-      - "8082:8082"  # Order service portu
+      - "8082:8082"
     environment:
       - SPRING_RABBITMQ_HOST=rabbitmq
       - SPRING_RABBITMQ_PORT=5672
